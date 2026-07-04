@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CertiGen — Bulk Certificate Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">✦</span>
+        <span class="logo-text">CertiGen</span>
+      </div>
+      <p class="tagline">Generate individual certificates for every name in seconds</p>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="panel panel-left">
+      <h2>1. Certificate Template</h2>
+      <p class="hint">Upload your own certificate image, or use the built-in template.</p>
+
+      <div class="upload-zone" id="uploadZone">
+        <input type="file" id="templateInput" accept="image/png,image/jpeg,image/webp" hidden />
+        <div class="upload-content">
+          <span class="upload-icon">📄</span>
+          <p>Drop your certificate template here</p>
+          <span class="upload-or">or</span>
+          <button type="button" class="btn btn-secondary" id="browseBtn">Browse files</button>
+        </div>
+        <img id="templatePreview" class="template-preview hidden" alt="Template preview" />
+      </div>
+
+      <button type="button" class="btn btn-ghost" id="useDefaultBtn">Use default template</button>
+
+      <h2>2. Student Names</h2>
+      <p class="hint">Enter one name per line. Each name gets its own certificate.</p>
+      <textarea
+        id="namesInput"
+        rows="8"
+        placeholder="Alice Johnson&#10;Bob Smith&#10;Carol Williams&#10;..."
+      ></textarea>
+      <p class="name-count"><span id="nameCount">0</span> names entered</p>
+
+      <h2>3. Name Placement</h2>
+      <div class="controls-grid">
+        <label>
+          Font
+          <select id="fontFamily">
+            <option value="Cormorant Garamond">Cormorant Garamond</option>
+            <option value="Georgia">Georgia</option>
+            <option value="Times New Roman">Times New Roman</option>
+            <option value="Palatino Linotype">Palatino</option>
+            <option value="Arial">Arial</option>
+          </select>
+        </label>
+        <label>
+          Font size
+          <input type="range" id="fontSize" min="24" max="80" value="48" />
+          <span id="fontSizeVal">48px</span>
+        </label>
+        <label>
+          Text color
+          <input type="color" id="fontColor" value="#1a2744" />
+        </label>
+        <label>
+          Vertical position
+          <input type="range" id="nameY" min="30" max="70" value="52" />
+          <span id="nameYVal">52%</span>
+        </label>
+      </div>
+
+      <button type="button" class="btn btn-primary btn-generate" id="generateBtn">
+        Generate Certificates
+      </button>
+    </section>
+
+    <section class="panel panel-right">
+      <div class="preview-header">
+        <h2>Preview</h2>
+        <button type="button" class="btn btn-secondary hidden" id="downloadAllBtn">
+          Download All (ZIP)
+        </button>
+      </div>
+
+      <div class="live-preview-wrap">
+        <canvas id="liveCanvas" width="800" height="565"></canvas>
+        <p class="preview-label">Live preview — first name shown</p>
+      </div>
+
+      <div id="resultsSection" class="results-section hidden">
+        <h3>Generated Certificates (<span id="resultCount">0</span>)</h3>
+        <div id="resultsGrid" class="results-grid"></div>
+      </div>
+
+      <div id="emptyState" class="empty-state">
+        <span class="empty-icon">🏆</span>
+        <p>Add names and click <strong>Generate Certificates</strong> to create downloadable certificates for each student.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>CertiGen — Bulk certificate generator. All processing happens in your browser.</p>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
